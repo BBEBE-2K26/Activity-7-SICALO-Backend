@@ -1,0 +1,5 @@
+ICT251 Activity 7 - Backend Development
+Student name: Bbebe Vincent Mwango
+Student number: 202510514
+System: IT Support Desk (same system as Activity 6)
+Live backend URL: TO BE ADDED AFTER DEPLOYMENT

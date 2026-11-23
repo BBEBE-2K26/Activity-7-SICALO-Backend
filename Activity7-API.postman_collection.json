@@ -1,0 +1,134 @@
+{
+  "info": {
+    "name": "ICT251 Activity 7 - IT Support Desk API",
+    "description": "CRUD and validation tests for the Activity 7 backend. Run requests in order. POST saves the created record ID to the collection variable.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "recordId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "GET API guide",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/"
+      }
+    },
+    {
+      "name": "GET health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "GET all records",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/records"
+      }
+    },
+    {
+      "name": "POST create record",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const data = pm.response.json();",
+              "  pm.collectionVariables.set('recordId', data.id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Wi-Fi connection problem\",\n  \"category\": \"Network\",\n  \"description\": \"The library Wi-Fi connection is unavailable.\",\n  \"status\": \"Pending\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/records"
+      }
+    },
+    {
+      "name": "GET created record",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/records/{{recordId}}"
+      }
+    },
+    {
+      "name": "PUT update record",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Wi-Fi issue\",\n  \"category\": \"Network\",\n  \"description\": \"The library wireless network is unavailable today.\",\n  \"status\": \"In progress\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/records/{{recordId}}"
+      }
+    },
+    {
+      "name": "DELETE created record",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/api/records/{{recordId}}"
+      }
+    },
+    {
+      "name": "POST invalid status (expect 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Invalid test\",\n  \"category\": \"Network\",\n  \"description\": \"This record uses an invalid status.\",\n  \"status\": \"Open\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/records"
+      }
+    }
+  ]
+}
